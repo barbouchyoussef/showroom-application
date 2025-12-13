@@ -1,0 +1,42 @@
+<app-head-bar></app-head-bar>
+
+@if(!selectedAuto){
+  <app-search-bar [autos]="autoList" (onSelectAuto)="selectAuto($event)"></app-search-bar>
+} @else {
+    <div class="container details-container">
+        <div class="row details-row">
+            <div class="col-md-4 details-image-col">
+                <img [src]="selectedAuto.photo" />
+            </div>
+            <div class="col-md-8 details-info-col">
+                <div class="details-header">
+                    <h4>{{selectedAuto.brand}} {{selectedAuto.model}}</h4>
+                    <span class="availability-badge" [ngClass]="{'in-stock': selectedAuto.availability > 0, 'out-stock': selectedAuto.availability === 0}">
+                        {{selectedAuto.availability > 0 ? '✓ In Stock' : '✗ Out of Stock'}} ({{selectedAuto.availability}})
+                    </span>
+                </div>
+
+                <div class="specs-section">
+                    <h5>Caractéristiques</h5>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">🏎️ Puissance</span>
+                            <span class="spec-value">{{selectedAuto.power}} CH</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">💰 Prix</span>
+                            <span class="spec-value">{{selectedAuto.price | currency:'TND'}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="description-section">
+                    <h5>Description</h5>
+                    <p>{{selectedAuto.description}}</p>
+                </div>
+
+                <button class="btn btn-back" (click)="goBack()">← Back to Search</button>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,82 @@
+<div class="container-fluid header">
+  <div class="input-group input-group-lg">
+    <span class="input-group-text">🔍 Brand</span>
+    <input (input)="selectAutoList(brand.value)" #brand type="text" class="form-control" placeholder="e.g. Audi">
+    <button (click)="selectAutoList(brand.value)" class="btn btn-success">Search</button>
+  </div>
+</div>
+
+<div class="filters-section">
+  <div class="filters-container">
+    <!-- Filtres Price -->
+    <div class="filter-group">
+      <label>💰 Prix (TND)</label>
+      <div class="filter-input-group">
+        <input type="number" [(ngModel)]="minPrice" (input)="applyFiltersAndSort()" placeholder="Min" class="filter-input">
+        <span>-</span>
+        <input type="number" [(ngModel)]="maxPrice" (input)="applyFiltersAndSort()" placeholder="Max" class="filter-input">
+      </div>
+    </div>
+
+    <!-- Filtres Power -->
+    <div class="filter-group">
+      <label>🏎️ Puissance (CH)</label>
+      <div class="filter-input-group">
+        <input type="number" [(ngModel)]="minPower" (input)="applyFiltersAndSort()" placeholder="Min" class="filter-input">
+        <span>-</span>
+        <input type="number" [(ngModel)]="maxPower" (input)="applyFiltersAndSort()" placeholder="Max" class="filter-input">
+      </div>
+    </div>
+
+    <!-- Only Available -->
+    <div class="filter-group">
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="onlyAvailable" (change)="applyFiltersAndSort()" class="filter-checkbox">
+        ✓ Only Available
+      </label>
+    </div>
+
+    <!-- Tri -->
+    <div class="filter-group">
+      <label>📊 Sort by</label>
+      <select [(ngModel)]="sortBy" (change)="applyFiltersAndSort()" class="filter-select">
+        <option value="brand">Brand (A-Z)</option>
+        <option value="price-asc">Price (Low to High)</option>
+        <option value="price-desc">Price (High to Low)</option>
+        <option value="power-asc">Power (Low to High)</option>
+        <option value="power-desc">Power (High to Low)</option>
+      </select>
+    </div>
+
+    <!-- Reset -->
+    <button class="btn-reset" (click)="resetFilters()">🔄 Reset</button>
+  </div>
+
+  <!-- Résultats Counter -->
+  <div class="results-counter">
+    <span class="counter-badge">📋 {{ selectedAutos.length }} result{{ selectedAutos.length !== 1 ? 's' : '' }} found</span>
+  </div>
+</div>
+
+<div class="container auto-container">
+  @for(auto of selectedAutos; track auto.id; let indice=$index; let even=$even; let odd=$odd) {
+    <div class="card" style="width: 18rem;">
+      <div class="card-favorite" [class.favorited]="isFavorite(auto)">
+        <button class="favorite-btn" (click)="toggleFavorite(auto)" [title]="isFavorite(auto) ? 'Remove from favorites' : 'Add to favorites'">
+          {{ isFavorite(auto) ? '❤️' : '🤍' }}
+        </button>
+      </div>
+      <img [src]="auto.photo" class="card-img-top" />
+      <div class="card-body" [ngClass]="{'card-body-odd':odd,'card-body-even':even}">
+        <h5 class="card-title" [ngStyle]="autoTitleStyle(auto)"> {{indice}} {{auto.brand}} - {{auto.model}}</h5>
+        <p class="card-text">Power : {{auto.power}}</p>
+        <p class="card-text">Price : {{auto.price|currency:'TND'}}</p>
+        <p class="card-text">Only {{auto.availability}} units available</p>
+        <button class="btn btn-primary" (click)="showDetails(auto)">More details</button>
+      </div>
+    </div>
+  }
+  @empty {
+    <p>No cars found! Try adjusting your filters.</p>
+  }
+</div>
