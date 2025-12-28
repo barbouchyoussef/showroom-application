@@ -4,6 +4,11 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://barbouchyoussef.github.io/showroom-application/)
 
+## Live Demo
+
+You can try the live version here: [Showroom Application](https://barbouchyoussef.github.io/showroom-application/)
+
+
 ## Description
 
 A web-based Showroom application developed using Angular.  
@@ -25,10 +30,6 @@ This project highlights:
 - Product detail view with descriptions
 - Search and filtering functionality
 - Interactive UI with responsive design
-
-## Live Demo
-
-You can try the live version here: [Showroom Application](https://barbouchyoussef.github.io/showroom-application/)
 
 ## How to Run Locally
 
